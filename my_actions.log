@@ -1,0 +1,178 @@
+2026-11-18T06:28:05.778747Z	   11 Query	SELECT @@general_log_file, @@log_output, @@general_log
+2026-11-18T06:28:09.756821Z	   12 Query	DROP DATABASE IF EXISTS staff_norm
+2026-11-18T06:28:09.762885Z	   12 Query	SELECT DATABASE()
+2026-11-18T06:28:09.763127Z	   12 Query	CREATE DATABASE staff_norm
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci
+2026-11-18T06:28:09.777451Z	   12 Query	USE staff_norm
+2026-11-18T06:28:09.778025Z	   12 Query	CREATE TABLE employees_bad (
+    employee_id     INT,
+    employee_name   VARCHAR(100),
+    sales_month     DATE,
+    sales           DECIMAL(12,2),
+    department_id   INT,
+    department_name VARCHAR(100)
+)
+2026-11-18T06:28:09.822561Z	   12 Query	INSERT INTO employees_bad VALUES
+(1, 'Иванов Иван',    '2026-01-01', 150000, 10, 'Отдел реализации'),
+(1, 'Иванов Иван',    '2026-02-01', 180000, 10, 'Отдел реализации'),
+(2, 'Петров Пётр',    '2026-01-01', 120000, 10, 'Отдел реализации'),
+(2, 'Петров Пётр',    '2026-02-01', 135000, 10, 'Отдел реализации'),
+(3, 'Сидорова Мария', '2026-01-01',  90000, 20, 'Отдел развития'),
+(3, 'Сидорова Мария', '2026-02-01', 105000, 20, 'Отдел развития'),
+(4, 'Козлова Анна',   '2026-01-01', 220000, 30, 'Отдел экспорта'),
+(5, 'Смирнов Олег',   '2026-01-01', 110000, 30, 'Отдел экспорта')
+2026-11-18T06:28:09.844512Z	   12 Query	SELECT * FROM employees_bad ORDER BY employee_id, sales_month
+2026-11-18T06:28:36.570202Z	   13 Query	DROP DATABASE IF EXISTS staff_norm
+2026-11-18T06:28:36.615016Z	   13 Query	SELECT DATABASE()
+2026-11-18T06:28:36.615263Z	   13 Query	CREATE DATABASE staff_norm
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci
+2026-11-18T06:28:36.624653Z	   13 Query	USE staff_norm
+2026-11-18T06:28:36.625632Z	   13 Query	CREATE TABLE employees_bad (
+    employee_id     INT,
+    employee_name   VARCHAR(100),
+    sales_month     DATE,
+    sales           DECIMAL(12,2),
+    department_id   INT,
+    department_name VARCHAR(100)
+)
+2026-11-18T06:28:36.663736Z	   13 Query	INSERT INTO employees_bad VALUES
+(1, 'Иванов Иван',    '2026-01-01', 150000, 10, 'Отдел реализации'),
+(1, 'Иванов Иван',    '2026-02-01', 180000, 10, 'Отдел реализации'),
+(2, 'Петров Пётр',    '2026-01-01', 120000, 10, 'Отдел реализации'),
+(2, 'Петров Пётр',    '2026-02-01', 135000, 10, 'Отдел реализации'),
+(3, 'Сидорова Мария', '2026-01-01',  90000, 20, 'Отдел развития'),
+(3, 'Сидорова Мария', '2026-02-01', 105000, 20, 'Отдел развития'),
+(4, 'Козлова Анна',   '2026-01-01', 220000, 30, 'Отдел экспорта'),
+(5, 'Смирнов Олег',   '2026-01-01', 110000, 30, 'Отдел экспорта')
+2026-11-18T06:28:36.671432Z	   13 Query	SELECT * FROM employees_bad ORDER BY employee_id, sales_month
+2026-11-18T06:28:42.488103Z	   14 Query	USE staff_norm
+2026-11-18T06:28:42.488247Z	   14 Query	SET autocommit = 0
+2026-11-18T06:28:42.489063Z	   14 Query	SELECT COUNT(*) AS rows_of_department_10
+FROM employees_bad
+WHERE department_id = 10
+2026-11-18T06:28:42.489466Z	   14 Query	UPDATE employees_bad
+SET department_name = 'Отдел продаж'
+WHERE department_id = 10
+2026-11-18T06:28:42.490217Z	   14 Query	UPDATE employees_bad
+SET department_name = 'Отдел реализации'
+WHERE department_id = 10 AND sales_month = '2026-01-01'
+2026-11-18T06:28:42.491048Z	   14 Query	SELECT department_id, department_name, COUNT(*) AS cnt
+FROM employees_bad
+GROUP BY department_id, department_name
+2026-11-18T06:28:42.491970Z	   14 Query	ROLLBACK  -- отменяем демо-изменения
+2026-11-18T06:28:42.497376Z	   14 Query	INSERT INTO employees_bad
+    (employee_id, employee_name, sales_month, sales,
+     department_id, department_name)
+VALUES (NULL, NULL, NULL, NULL, 40, 'Отдел маркетинга')
+2026-11-18T06:28:42.497593Z	   14 Query	SELECT * FROM employees_bad WHERE department_id = 40
+2026-11-18T06:28:42.497806Z	   14 Query	ROLLBACK  -- отменяем демо-вставку
+2026-11-18T06:28:42.500243Z	   14 Query	DELETE FROM employees_bad
+WHERE department_id = 20
+2026-11-18T06:28:42.500637Z	   14 Query	SELECT * FROM employees_bad WHERE department_id = 20
+2026-11-18T06:28:42.500995Z	   14 Query	SELECT DISTINCT department_id, department_name
+FROM employees_bad
+WHERE department_id = 20
+2026-11-18T06:28:42.501249Z	   14 Query	ROLLBACK  -- отменяем демо-удаление
+2026-11-18T06:28:42.503072Z	   14 Query	SET autocommit = 1
+2026-11-18T06:28:42.503348Z	   14 Query	SELECT * FROM employees_bad ORDER BY employee_id, sales_month
+2026-11-18T06:29:30.345304Z	   18 Query	USE staff_norm
+2026-11-18T06:29:30.345548Z	   18 Query	CREATE TABLE departments (
+    department_id   INT          NOT NULL,
+    department_name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (department_id)
+)
+2026-11-18T06:29:30.377583Z	   18 Query	CREATE TABLE employees (
+    employee_id   INT          NOT NULL,
+    employee_name VARCHAR(100) NOT NULL,
+    department_id INT          NOT NULL,
+    PRIMARY KEY (employee_id),
+    FOREIGN KEY (department_id) REFERENCES departments (department_id)
+)
+2026-11-18T06:29:30.420998Z	   18 Query	CREATE TABLE employee_sales (
+    employee_id INT           NOT NULL,
+    sales_month DATE          NOT NULL,
+    sales       DECIMAL(12,2) NOT NULL,
+    PRIMARY KEY (employee_id, sales_month),
+    FOREIGN KEY (employee_id) REFERENCES employees (employee_id)
+)
+2026-11-18T06:29:30.453016Z	   18 Query	INSERT INTO departments (department_id, department_name)
+SELECT DISTINCT department_id, department_name
+FROM employees_bad
+WHERE department_id IS NOT NULL
+2026-11-18T06:29:30.460821Z	   18 Query	INSERT INTO employees (employee_id, employee_name, department_id)
+SELECT DISTINCT employee_id, employee_name, department_id
+FROM employees_bad
+WHERE employee_id IS NOT NULL
+2026-11-18T06:29:30.469427Z	   18 Query	INSERT INTO employee_sales (employee_id, sales_month, sales)
+SELECT employee_id, sales_month, sales
+FROM employees_bad
+WHERE employee_id IS NOT NULL AND sales_month IS NOT NULL
+2026-11-18T06:29:30.477727Z	   18 Query	SELECT 'departments'    AS table_name, COUNT(*) AS rows_cnt FROM departments
+UNION ALL SELECT 'employees',      COUNT(*) FROM employees
+UNION ALL SELECT 'employee_sales', COUNT(*) FROM employee_sales
+2026-11-18T06:29:35.196166Z	   19 Query	USE staff_norm
+2026-11-18T06:29:35.196976Z	   19 Query	SELECT 'до нормализации (плохая таблица)' AS source,
+       SUM(sales) AS total_sum,
+       COUNT(*)   AS rows_cnt
+FROM employees_bad
+UNION ALL
+SELECT 'после нормализации (3NF)',
+       SUM(s.sales),
+       COUNT(*)
+FROM employee_sales s
+2026-11-18T06:29:35.198125Z	   19 Query	SELECT 'employees'          AS what, COUNT(DISTINCT employee_id)   AS cnt FROM employees_bad WHERE employee_id IS NOT NULL
+UNION ALL SELECT 'employees (3NF)',  COUNT(*) FROM employees
+UNION ALL SELECT 'departments',      COUNT(DISTINCT department_id) FROM employees_bad WHERE department_id IS NOT NULL
+UNION ALL SELECT 'departments (3NF)', COUNT(*) FROM departments
+UNION ALL SELECT 'sales rows',       COUNT(*) FROM employees_bad WHERE employee_id IS NOT NULL AND sales_month IS NOT NULL
+UNION ALL SELECT 'sales rows (3NF)', COUNT(*) FROM employee_sales
+2026-11-18T06:29:35.202426Z	   19 Query	SELECT
+  (SELECT COUNT(*) FROM
+     (SELECT employee_id, sales_month FROM employees_bad
+      WHERE employee_id IS NOT NULL AND sales_month IS NOT NULL) b
+     LEFT JOIN employee_sales s
+       ON s.employee_id = b.employee_id AND s.sales_month = b.sales_month
+     WHERE s.employee_id IS NULL) AS missing_from_3nf,
+  (SELECT COUNT(*) FROM employee_sales s
+     LEFT JOIN
+     (SELECT employee_id, sales_month FROM employees_bad
+      WHERE employee_id IS NOT NULL AND sales_month IS NOT NULL) b
+       ON s.employee_id = b.employee_id AND s.sales_month = b.sales_month
+     WHERE b.employee_id IS NULL) AS extra_in_3nf
+2026-11-18T06:29:35.203503Z	   19 Query	SELECT e.employee_id,
+       e.employee_name,
+       d.department_id,
+       d.department_name,
+       s.sales_month,
+       s.sales
+FROM employee_sales s
+JOIN employees  e ON e.employee_id    = s.employee_id
+JOIN departments d ON d.department_id = e.department_id
+ORDER BY e.employee_id, s.sales_month
+2026-11-18T06:29:35.204370Z	   19 Query	SELECT d.department_name,
+       SUM(s.sales) AS total_sales
+FROM departments d
+JOIN employees  e ON e.department_id = d.department_id
+JOIN employee_sales s ON s.employee_id = e.employee_id
+GROUP BY d.department_id, d.department_name
+ORDER BY total_sales DESC
+2026-11-18T06:29:35.205172Z	   19 Query	SELECT e.employee_name,
+       SUM(s.sales) AS total_sales
+FROM employees e
+JOIN employee_sales s ON s.employee_id = e.employee_id
+GROUP BY e.employee_id, e.employee_name
+ORDER BY total_sales DESC
+LIMIT 1
+2026-11-18T06:29:35.205660Z	   19 Query	SELECT s.sales_month,
+       SUM(s.sales) AS month_total
+FROM employee_sales s
+GROUP BY s.sales_month
+ORDER BY s.sales_month
+2026-11-18T06:29:35.205983Z	   19 Query	SELECT e.employee_name, d.department_name
+FROM employees e
+JOIN departments d ON d.department_id = e.department_id
+WHERE e.employee_id = 3
+2026-11-18T06:29:35.206669Z	   19 Query	RENAME TABLE employees_bad TO employees_bad_archive
+2026-11-18T06:29:35.234191Z	   19 Query	SHOW TABLES
