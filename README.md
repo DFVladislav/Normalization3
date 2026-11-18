@@ -218,23 +218,13 @@ rm general_raw.log
 - `my_actions.log` — отфильтрованный лог действий.
 
 ## Скриншоты
+<img width="716" height="330" alt="изображение" src="https://github.com/user-attachments/assets/9d35d0c1-5974-4238-b670-f55fdb1b7fbe" />
+<img width="700" height="300" alt="изображение" src="https://github.com/user-attachments/assets/195372c4-3757-4e19-b58b-da1b052c8359" />
+<img width="702" height="155" alt="изображение" src="https://github.com/user-attachments/assets/798646f2-6840-4220-972c-eaf95fc6be2c" />
+<img width="698" height="340" alt="изображение" src="https://github.com/user-attachments/assets/c07c7841-0b17-421f-8a6e-a2a1b7755fa2" />
 
-Сделать скриншоты выводов (Win+Shift+S) и положить в корень репозитория под этими именами:
 
-| Файл | Что снять |
-|---|---|
-| `image.png` | Шаг 4: создание базы и таблицы `employees_bad` |
-| `image-1.png` | Шаг 5: аномалии обновления/вставки/удаления |
-| `image-2.png` | Шаг 7: создание таблиц 3НФ и перенос |
-| `image-3.png` | Шаг 8: проверки (суммы, количества, `missing/extra = 0`) |
-| `image-4.png` | Шаг 10: `my_actions.log` |
 
-После добавления снимков вставьте их в конец файла:
 
-```markdown
-![Исходная таблица employees_bad](image.png)
-![Демонстрация аномалий](image-1.png)
-![Таблицы 3НФ и перенос данных](image-2.png)
-![Проверка сохранности данных](image-3.png)
-![Экспортированный SQL-лог действий](image-4.png)
+
 ```
